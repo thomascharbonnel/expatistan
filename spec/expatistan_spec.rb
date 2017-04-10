@@ -16,6 +16,20 @@ RSpec.describe Expatistan do
     expect(Expatistan::VERSION).not_to be nil
   end
 
+  describe ".parse_city_name(orig)" do
+    context "when the city name is Paris" do
+      it "returns 'paris'" do
+        expect(Expatistan.parse_city_name("Paris")).to eq("paris")
+      end
+    end
+
+    context "when the city name is Hong Kong" do
+      it "returns 'hong-kong'" do
+        expect(Expatistan.parse_city_name("Hong Kong")).to eq("hong-kong")
+      end
+    end
+  end
+
   describe ".compare(city_a, city_b)" do
     context "when city_a is Paris" do
       context "when city_b is London" do
