@@ -1,5 +1,15 @@
 require "spec_helper"
-require "fakeweb"
+require "artifice"
+
+def rack_help(file)
+  Proc.new do |env|
+    [
+      200,
+      {"Content-Type": "text/html"},
+      [open(file).read]
+    ]
+  end
+end
 
 RSpec.describe Expatistan do
   it "has a version number" do
@@ -9,14 +19,10 @@ RSpec.describe Expatistan do
   describe ".compare(city_a, city_b)" do
     context "when city_a is Paris" do
       context "when city_b is London" do
-        it "returns 1.2" do
-          stream = File.read("paris_london.html")
-          FakeWeb.register_uri(:get, 
-            "https://www.expatistan.com/cost-of-living/comparison/paris/london", 
-            :body => stream, 
-            :content_type => "text/html")
+        it "returns 1.31" do
+          Artifice.activate_with(rack_help("paris_london.html"))
 
-          expect(Expatistan.compare("Paris", "London")).to eq(1.2)
+          expect(Expatistan.compare("Paris", "London")).to eq(1.31)
         end
       end
     end
