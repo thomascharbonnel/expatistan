@@ -39,6 +39,14 @@ RSpec.describe Expatistan do
           expect(Expatistan.compare("Paris", "London")).to eq(1.31)
         end
       end
+
+      context "when city_b is Paris" do
+        it "returns 1" do
+          Artifice.activate_with(rack_help("paris_paris.html"))
+
+          expect(Expatistan.compare("Paris", "Paris")).to eq(1)
+        end
+      end
     end
   end
 end
