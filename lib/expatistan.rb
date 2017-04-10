@@ -13,6 +13,8 @@ module Expatistan
 
     if text =~ /more expensive/
       1 + text.gsub(/% more expensive/, "").to_i / 100.0
+    elsif text =~ /about the same/
+      1
     end
   end
 
